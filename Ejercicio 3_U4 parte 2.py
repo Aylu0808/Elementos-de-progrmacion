@@ -8,9 +8,8 @@ CONT = 0
 raiz = 0
 raiz1 = 0
 raiz2 = 0
-SUM = 0
 
-while(CONT <=99):
+while(CONT <= 99):
     
     A = int(input("Ingrese el coeficiente A: "))
     B = int(input("Ingrese el coeficiente B: "))
@@ -19,10 +18,8 @@ while(CONT <=99):
     if(A == 0 and C == 0):
         if(B == 0):
             print("Todos los coeficientes son 0.")
-            CONT = 99
+            CONT = 100
     
-    SUM = A + B + C
-
     if((B**2 - 4*A*C) < 0):
         print("Tiene raices complejas")
         CONT = CONT + 1
@@ -30,5 +27,5 @@ while(CONT <=99):
         print("Tiene raices reales")
         CONT = CONT + 1
         
-    if(CONT == 100 and SUM != 0):
-        print("Se llego a las 100 ternas")
+if(CONT == 99):
+    print("Se llego a las 100 ternas")

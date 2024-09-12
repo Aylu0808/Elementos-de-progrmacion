@@ -8,6 +8,7 @@ CONT = 0
 raiz = 0
 raiz1 = 0
 raiz2 = 0
+flag = 0
 
 while(CONT < 100):
     
@@ -18,19 +19,15 @@ while(CONT < 100):
     if(A == 0 and C == 0):
         if(B == 0):
             print("Todos los coeficientes son 0.")
-            break
-        
-    raiz = B**2 - 4*A*C
-        
-    if(raiz < 0):
-        print("Tiene raices complejas")
-    else:
-        raiz1 = (- B - (B**2 - 4*A*C)**0.5) / (2*A)
-        raiz2 = (- B - (B**2 - 4*A*C)**0.5) / (2*A)
+            CONT = 100
+            flag = 0
             
-        print("Las raices son: ",raiz1,"y",raiz2)
-        
-if(CONT == 100):
+    if((B**2 - 4*A*C) < 0):
+        print("Tiene raices complejas")
+    elif((B**2 - 4*A*C) > 0):
+        print("Tiene raices reales")
+
+
+if(CONT == 100 and flag == 1):
     print("Se llego a las 100 ternas")
-        
             

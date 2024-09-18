@@ -8,7 +8,7 @@ menor_impar = 0
 
 numero = 0
 
-while numero = 0:
+while numero == 0:
 
     n = int(input("Ingrese un numero: "))
 
@@ -16,10 +16,10 @@ while numero = 0:
         numero = -1
 
     if n % 2 == 0:
-        if mayor_par == 0 or n > mayor_par:
+        if (mayor_par == 0 or n > mayor_par):
             mayor_par = n
-        else:
-        if menor_impar == 0 or n < menor_impar:
+    else:
+        if (menor_impar == 0 or n < menor_impar):
             menor_impar = n
 
 print("El mayor par es: ",mayor_par)

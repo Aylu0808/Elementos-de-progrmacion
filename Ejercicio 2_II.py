@@ -19,6 +19,22 @@ b- Cantidad de empleados de más de 10 años de antigüedad.
 c- El mayor sueldo y el legajo del empleado que cobra dicho sueldo.
 d- Cantidad de hombres y de mujeres"""
 
+#VARIABLES
+
+legajo = 0
+sueldo = 0
+mayor = 0
+empleado = 0
+flag = 0
+antiguedad = 0
+bonificacion = 0
+total = 0
+CANT = 0
+sexo = 0
+M = 0
+F = 0
+categoria = 0
+
 legajo = int(input("Ingrese el numero de legajo: "))
 while legajo < 1000 and legajo > 5000:
     legajo = int(input("Ingrese un numero de legajo valido: "))

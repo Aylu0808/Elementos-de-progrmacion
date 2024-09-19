@@ -10,7 +10,6 @@ while nro > 0:
     resto = nro % 2
     binario = str(resto) + binario
     nro = nro // 2
-    contador = contador + 1
     
 print("El numero ",nro,"en binario es: ",binario)
     

@@ -30,7 +30,7 @@ antiguedad = 0
 bonificacion = 0
 total = 0
 CANT = 0
-sexo = 0
+sexo = ""
 M = 0
 F = 0
 categoria = 0
@@ -52,41 +52,61 @@ while legajo != 0:
         if mayor < sueldo:
             empleado = legajo
             mayor = sueldo
+
+    sexo = input("Ingrese el sexo del empleado: ").upper()
+    while sexo != "M" and sexo != "F":
+        sexo = input("ERROR!! Ingrese un sexo valido: ").upper()
+        
+    if sexo == "M":
+        M = M +1
+    else:
+        F = F + 1
     
     antiguedad = int(input("Ingrese los años de antiguedad: "))
     while antiguedad < 0:
         antiguedad = int(print("ERROR!!Ingrese de nuevo los años de antiguedad: "))
-        
-    if antiguedad > 10:
-        bonificacion = sueldo * 0.90
+            
+    if antiguedad >= 10:
+        bonificacion = sueldo * 0.10
         total = sueldo + bonificacion
         CANT = CANT + 1
-        
-    sexo = input("Ingrese el sexo del empleado: ")
-    while sexo != 'M' or sexo != 'F':
-        sexo = input("ERROR!! Ingrese un sexo valido: ")
-        
-    if sexo == 'M':
-        M = M +1
-    else:
-        F = F + 1
-        
-    categoria = int(input("Ingrese la categoriadel empleado: "))
-    while categoria < 1 and categoria > 5:
-        categoria = int(input("ERROR!! Ingrese una categoria valida: "))
-        
-    if categoria == 2 or categoria == 3:
-        total = sueldo + 500
-        print("El sueldo a abonar es: ",total)
-    if categoria == 4:
-        bonificacion = sueldo * 0.90
-        total = bonificacion + sueldo
-        print("El sueldo a abonar es: ",total)
-    if categoria == 5:
-        bonificacion = sueldo * 0.70
-        total = bonificacion + sueldo
-        print("El sueldo a abonar es: ",total)
+
+        categoria = int(input("Ingrese la categoria del empleado: "))
+        while categoria != 1 and categoria != 2 and categoria != 3 and categoria != 4 and categoria != 5:
+            categoria = int(input("ERROR!! Ingrese una categoria valida: "))
+            
+        if categoria == 2 or categoria == 3:
+            total = sueldo + 500
+            print("El sueldo a abonar es: ",total)
+        if categoria == 4:
+            bonificacion = sueldo * 0.90
+            total = bonificacion + sueldo
+            print("El sueldo a abonar es: ",total)
+        if categoria == 5:
+            bonificacion = sueldo * 0.70
+            total = bonificacion + sueldo
+            print("El sueldo a abonar es: ",total)
+        else:
+            categoria = int(input("Ingrese la categoria del empleado: "))
+        while categoria < 1 and categoria > 5:
+            categoria = int(input("ERROR!! Ingrese una categoria valida: "))
+            
+        if categoria == 2 or categoria == 3:
+            total = sueldo + 500
+            print("El sueldo a abonar es: ",total)
+        if categoria == 4:
+            bonificacion = sueldo * 0.90
+            total = bonificacion + sueldo
+            print("El sueldo a abonar es: ",total)
+        if categoria == 5:
+            bonificacion = sueldo * 0.70
+            total = bonificacion + sueldo
+            print("El sueldo a abonar es: ",total)
+
+    legajo = int(input("Ingrese el numero de legajo: "))
+    while legajo < 1000 and legajo > 5000:
+        legajo = int(input("Ingrese un numero de legajo valido: "))
         
 print("La cantidad total de mujeres es: ",F,"y la cantidad total de hombres es: ",M)
-print("El empleado con mayor sueldo es el de: ",empleado,"con un sueldo de: ",mayor)
+print("El empleado con mayor sueldo es el de: ",mayor,"con un sueldo de: ",empleado)
 print("La cantidad de empleados con mas de 10 años de antiguedad es: ",CANT)

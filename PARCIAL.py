@@ -1,3 +1,4 @@
+#########################################################################################################################################################################
 def CargarDatos_I(CP,CI,VC,N): #Funcion de carga de datos inciales
     for x in range(0,N):
         CP[x] = ValidaciondeRango(1000,9999,"Ingrese el codigo del producto: ")
@@ -55,6 +56,12 @@ def MAXIMO(lista,lista_2):
             max = lista[x]
             codigo = lista_2[x]
     return codigo
+
+def no_recepcionados(lista_2,lista,A):
+
+    for x in range(0,A):
+        if lista[x] == 0:
+            print("Prodcutos que no fueron recepcionados: ",lista_2[x])
 
 def main():
     #CARGA DE PRODUCTOS DEL DEPOSITO
@@ -128,6 +135,8 @@ def main():
         print("Código del producto de máxima cantidad de veces recepcionado:", MAXIMO(RECEPCIONES,PRODUCTO))
     else:
         print("No se han recepcionado productos.")
+
+    no_recepcionados(PRODUCTO,RECEPCIONES,N)
 
 
 if __name__ == "__main__":

@@ -39,7 +39,6 @@ def MostrarDatos(L1, L2): #Mostrar datos finales
         print("%22d\t%22d" % (L1[i], L2[i]))
 
 def MINIMO(A,B,C):
-
     if A <= B and A <= C:
         minimo = "LUNES"
     elif B <= A and B <= C:
@@ -48,30 +47,28 @@ def MINIMO(A,B,C):
         minimo = "VIERNES"
     return minimo
 
-def MaximasRecepciones(PRO,lista):
+def MAXIMO(lista,lista_2):
     max = 0
-    for x in range(lista):
-        if x > max:
-            max = x
-    print("Productos con la maxima cantidad de recepciones: ")
-    for i in range(len(lista)):
-        if lista[i] == max: 
-            print("Codigo de producto: ",PRO[i],"-Recepciones: ",lista[i])
-
+    codigo = 0
+    for x in range(len(lista)):
+        if lista[x] > max:
+            max = lista[x]
+            codigo = lista_2[x]
+    return codigo
 
 def main():
     #CARGA DE PRODUCTOS DEL DEPOSITO
-    N = Validacion(0,"Ingrese la cantidad de productos a recepcionar: ") 
+    N = Validacion(0,"Ingrese la cantidad de productos en existencia: ") 
 
     PRODUCTO= [0]*N 
     CANTIDAD = [0]*N
     PRECIO = [0]*N
-    RECEPCIONES =[0]*N
+    RECEPCIONES =[0]*N #Cuenta las recepciones por producto
 
     CargarDatos_I(PRODUCTO,CANTIDAD,PRECIO,N)
 
     #CARGA DE PRODUCTOS NUEVOS EN EL MES
-    CODIGO = ValidaciondeRango(1000,9999,"Ingrese el codigo del producto: ")
+    CODIGO = ValidaciondeRango(1000,9999,"Ingrese el codigo del producto a recepcionar: ")
 
     C = 0
     G = 0
@@ -101,18 +98,19 @@ def main():
             DIA = Validacion_L("LUNES","MIERCOLES","VIERNES","Ingrese el dia de recepcion: ").upper()
             if DIA == "LUNES":
                 LUNES += 1
-                COMPRA = PRECIO[POS] * 1.05
-            if DIA == "MIERCOLES":
-                MIERCOLES += 1
-            if DIA == "VIERNES":
-                VIERNES += 1
+                COMPRA = PRECIO[POS] * 1.05 #calcula con incremento para el lunes
+            else:
+                COMPRA = PRECIO[POS] #sin incremento para los otros dias
+                if DIA == "MIERCOLES":
+                    MIERCOLES += 1
+                if DIA == "VIERNES":
+                    VIERNES += 1
 
-            MIN = MINIMO(LUNES,MIERCOLES,VIERNES)
-            print("El dia de la semana con menor cantidad fue el",MIN)
-
-            CANTIDAD[POS] += CANTIDAD_I
+            CANTIDAD[POS] += CANTIDAD_I #suma la cantidad existente con la ingresada
             TOTAL = CANTIDAD_I * COMPRA
             print("Importe pagado por la recepcion: ",TOTAL)
+
+            RECEPCIONES[POS] +=1 #cuenta la recepcion por producto
 
         else:
             print("No se encontro el codigo del producto solicitado")
@@ -123,7 +121,14 @@ def main():
 
     MostrarDatos(PRODUCTO,CANTIDAD)
 
-    MaximasRecepciones(PRODUCTO, RECEPCIONES)
+    MIN = MINIMO(LUNES,MIERCOLES,VIERNES) #funcion minimo para encontrar el dia que tuvo menos recepciones
+    print("El dia de la semana con menor cantidad fue el",MIN)
+
+    if MAXIMO(RECEPCIONES,PRODUCTO) != -1:  # Verificar que se haya encontrado un producto
+        print("Código del producto de máxima cantidad de veces recepcionado:", MAXIMO(RECEPCIONES,PRODUCTO))
+    else:
+        print("No se han recepcionado productos.")
+
 
 if __name__ == "__main__":
     main()

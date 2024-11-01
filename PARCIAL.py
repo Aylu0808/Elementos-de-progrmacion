@@ -1,4 +1,3 @@
-#########################################################################################################################################################################
 def CargarDatos_I(CP,CI,VC,N): #Funcion de carga de datos inciales
     for x in range(0,N):
         CP[x] = ValidaciondeRango(1000,9999,"Ingrese el codigo del producto: ")
@@ -40,12 +39,16 @@ def MostrarDatos(L1, L2): #Mostrar datos finales
         print("%22d\t%22d" % (L1[i], L2[i]))
 
 def MINIMO(A,B,C):
-    if A <= B and A <= C:
-        minimo = "LUNES"
-    elif B <= A and B <= C:
-        minimo = "MIERCOLES"
+    if A == B and A == C:
+        if B == C:
+            minimo = "IGUALES"
     else:
-        minimo = "VIERNES"
+        if A <= B and A <= C:
+            minimo = "LUNES"
+        elif B <= A and B <= C:
+            minimo = "MIERCOLES"
+        else:
+            minimo = "VIERNES"
     return minimo
 
 def MAXIMO(lista,lista_2):
@@ -129,7 +132,10 @@ def main():
     MostrarDatos(PRODUCTO,CANTIDAD)
 
     MIN = MINIMO(LUNES,MIERCOLES,VIERNES) #funcion minimo para encontrar el dia que tuvo menos recepciones
-    print("El dia de la semana con menor cantidad fue el",MIN)
+    if MIN == "IGUALES":
+        print("Todos los dias tuvieron la misma cantidad de recepciones")
+    else:
+        print("El dia de la semana con menor cantidad fue el",MIN)
 
     if MAXIMO(RECEPCIONES,PRODUCTO) != -1:  # Verificar que se haya encontrado un producto
         print("Código del producto de máxima cantidad de veces recepcionado:", MAXIMO(RECEPCIONES,PRODUCTO))

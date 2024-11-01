@@ -11,9 +11,22 @@ def Validacion(valor,texto): #Funcion para validar con un solo valor
     return num
 
 def ValidaciondeRango(I,F,texto): #Funcion para validar el codigo del producto
-    num = int(input(texto))
+    num = int(input(texto))  
+
+    cifra1 = num // 1000
+    cifra2 = (num // 100) % 10
+    cifra3 = (num // 10) % 10
+    cifra4 = num % 10
+    correlativo = 0
+
     while (num < I or num > F) and num != 0:
-        num = int(input("ERROR! Ingrese un valor valido: "))
+        if cifra2 == cifra1 + 1 and cifra3 == cifra2 + 1:
+            if cifra4 == cifra3 + 1:
+                print("No se aceptan numeros correlativos") 
+                num = int(input("ERROR! Ingrese un valor valido: "))
+        else:
+            while (num < I or num > F) and num != 0:
+                num = int(input("ERROR! Ingrese un valor valido: "))
     return num
 
 def Validacion_L(A,B,C,texto): #Funcion para validar con string

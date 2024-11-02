@@ -1,8 +1,16 @@
 def CargarDatos_I(CP,CI,VC,N): #Funcion de carga de datos inciales
+    nuevo = 0
     for x in range(0,N):
-        CP[x] = ValidaciondeRango(1000,9999,"Ingrese el codigo del producto: ")
-        CI[x] = Validacion(0,"Ingrese la cantidad del producto(kilos): ")
-        VC[x] = Validacion(0,"Ingrese el valor de compra por kilo: ")
+        codigo_V = True
+        while codigo_V:
+            nuevo = ValidaciondeRango(1000,9999,"Ingrese el codigo del producto: ")
+            if x > 0 and nuevo == CP[x-1]+1: #verifica si el nuevo codigo es uno mas que el anterior
+                print("ERROR! El codigo no puede ser correlativo.")
+            elif x == 0 or nuevo > CP[x-1]:
+                CP[x] = nuevo
+                CI[x] = Validacion(0,"Ingrese la cantidad del producto(kilos): ")
+                VC[x] = Validacion(0,"Ingrese el valor de compra por kilo: ")
+                codigo_V = False
 
 def Validacion(valor,texto): #Funcion para validar con un solo valor
     num = int(input(texto))
@@ -11,22 +19,9 @@ def Validacion(valor,texto): #Funcion para validar con un solo valor
     return num
 
 def ValidaciondeRango(I,F,texto): #Funcion para validar el codigo del producto
-    num = int(input(texto))  
-
-    cifra1 = num // 1000
-    cifra2 = (num // 100) % 10
-    cifra3 = (num // 10) % 10
-    cifra4 = num % 10
-    correlativo = 0
-
-    if cifra2 == cifra1 + 1 and cifra3 == cifra2 + 1:
-        if cifra4 == cifra3 + 1:
-            correlativo = 1
-    if correlativo == 1:
-        num = int(input("Ingresé un número no correlativo"))
-   else:
-        while (num < I or num > F) and num != 0:
-             num = int(input("ERROR! Ingrese un valor valido: "))
+    num = int(input(texto)) 
+    while (num < I or num > F) and num != 0:
+        num = int(input("ERROR! Ingrese un valor valido: "))
     return num
 
 def Validacion_L(A,B,C,texto): #Funcion para validar con string
@@ -73,8 +68,7 @@ def MAXIMO(lista,lista_2):
             codigo = lista_2[x]
     return codigo
 
-def no_recepcionados(lista_2,lista,A):
-
+def no_recepcionados(lista_2,lista,A): #Funcion que muestra los prductos no recepcionados
     for x in range(0,A):
         if lista[x] == 0:
             print("Prodcutos que no fueron recepcionados: ",lista_2[x])
@@ -90,9 +84,6 @@ def main():
 
     CargarDatos_I(PRODUCTO,CANTIDAD,PRECIO,N)
 
-    #CARGA DE PRODUCTOS NUEVOS EN EL MES
-    CODIGO = ValidaciondeRango(1000,9999,"Ingrese el codigo del producto a recepcionar: ")
-
     C = 0
     G = 0
     O = 0
@@ -102,12 +93,14 @@ def main():
     COMPRA = 0
     TOTAL = 0
 
-    while CODIGO != 0:
+    CODIGO = ValidaciondeRango(1000,9999,"Ingrese el codigo del producto a recepcionar: ")
+
+    while CODIGO != 0: #Mientras el codigo no sea 0 ingresa al while
 
         POS = 0
         POS = busquedad(PRODUCTO,CODIGO)
 
-        if POS >= 0:
+        if POS >= 0: #Si se encontro el producto
             CANTIDAD_I = Validacion(0,"Ingrese la cantidad del producto: ")
 
             ZONA_T = Validacion_L("C","G","O","Ingrese la letra de la zona de procedencia: ").upper()

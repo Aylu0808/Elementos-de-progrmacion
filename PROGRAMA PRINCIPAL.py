@@ -1,7 +1,7 @@
 import random
 from time import sleep
-from PROGRAMA_MODULO import Vivero
-from machine import Pin
+from MODULO import Vivero
+"""from machine import Pin
 
 # Declaración de pines para el display de 7 segmentos
 pin_A = Pin(0, Pin.OUT)
@@ -58,33 +58,72 @@ def apagar_led(indice):
     elif indice == 8:
         led_8.value(0)
 
-
+def SieteSegmentos(valor): #es el valor del aspersor
+    if valor == 1:
+        pin_B.value(1)
+        pin_A.value(1)
+    elif valor == 2:
+        pin_A.value(1)
+        pin_B.value(1)
+        pin_G.value(1)
+        pin_E.value(1)
+        pin_D.value(1)
+    elif valor == 3:
+        pin_A.value(1)
+        pin_B.value(1)
+        pin_G.value(1)
+        pin_C.value(1)
+        pin_D.value(1)
+    elif valor == 4:
+        pin_F.value(1)
+        pin_G.value(1)
+        pin_B.value(1)
+        pin_C.value(1)
+    elif valor == 5:
+        pin_A.value(1)
+        pin_F.value(1)
+        pin_G.value(1)
+        pin_C.value(1)
+        pin_D.value(1)
+    elif valor == 6:
+        pin_A.value(1)
+        pin_F.value(1)
+        pin_G.value(1)
+        pin_C.value(1)
+        pin_E.value(1)
+        pin_D.value(1)
+    elif valor == 7:
+        pin_A.value(1)
+        pin_B.value(1)
+        pin_C.value(1)
+    elif valor == 8:
+        pin_A.value(1)
+        pin_B.value(1)
+        pin_C.value(1)
+        pin_D.value(1)
+        pin_E.value(1)
+        pin_F.value(1)
+        pin_G.value(1)"""
+        
 def main():
     vivero = Vivero()
 
-    S1 = 0
-    S2 = 0
-
-    for aspersor in range(1,9):
-        alcance = random.randint(0,20)
-        S1 = random.randint(0,1)
-        S2 = random.randint(0,1)
-
-        if S1 != S2:
-            indice = (aspersor -1) // 2
-            if aspersor % 2 == 0:
+    aspersor = random.randint(0,255)
+    alcance = random.randint(0,255)
+    
+            
+            """if aspersor % 2 == 0: #Si el aspersor es par 
                 vivero.set_medicionespar(indice,alcance)
-                if alcance < 4 or alcance > 7:
+                if alcance < 4 or alcance > 7: #Si esta fuera del rando determinado
                     vivero.set_cantpar(indice,vivero.get_cantpar()[indice] + 1)
-                else:
+                else: #Si es impar
                     vivero.set_medicionesimpar(indice,alcance)
-                    if alcance < 6 or alcance > 15:
-                        vivero.set_cantimpar(indice,vivero.getimpar()[indice] + 1)
+                    if alcance < 6 or alcance > 15: #si esta fuera del rango determinado
+                        vivero.set_cantimpar(indice,vivero.getimpar()[indice] + 1)"""
         
         encender_led(aspersor)
         sleep(0.5)
         apagar_led(aspersor)
-
         sleep(0.5)
 
     print("Resultados finales:")

@@ -58,13 +58,13 @@ class Vivero:
         print(f"Alcance promedio de los impares: {self.get_alcance_promimpar()}")
 
         print("\nAspersores defectuosos:")
-                for i in range(8):
-                    if self.cant_mediciones[i] == 0:
-                        print(f"Aspersor {i + 1}: Sin mediciones.")
-                    elif (self.cant_mediciones[i] > 0 and 
-                          self.acum_promediopar == 0 and 
-                          self.acum_promedioimpar == 0):  # Sin alcance válido
-                        print(f"Aspersor {i + 1}: Todas las mediciones tuvieron alcance cero.")
+        for i in range(8):
+            if self.cant_mediciones[i] == 0:
+                print(f"Aspersor {i + 1}: Sin mediciones.")
+            elif (self.cant_mediciones[i] > 0 and 
+                self.acum_promediopar == 0 and 
+                self.acum_promedioimpar == 0):  # Sin alcance válido
+                print(f"Aspersor {i + 1}: Todas las mediciones tuvieron alcance cero.")
 import time
 import random
 import machine

@@ -1,4 +1,3 @@
-import time
 class Vivero:
         # Constructor: Inicializa los atributos de la clase
     def __init__(self):

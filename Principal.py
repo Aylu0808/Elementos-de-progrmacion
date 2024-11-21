@@ -45,7 +45,7 @@ def SieteSegmentos(A, B, C, D, E, F, G):
     pin_G.value(G)
 #Funcion Principal
 def main():
-    vivero = Vivero()# Crear una instancia de la clase Vivero (debe estar definida previamente)
+    vivero = Vivero()# Crear una instancia de la clase Vivero
     print("Simulación del sistema de riego iniciada...\n") 
     hora_actual = time.localtime()# Obtener la hora actual del sistema
     alcance = random.randint(0, 255)# Generar un valor aleatorio para el alcance

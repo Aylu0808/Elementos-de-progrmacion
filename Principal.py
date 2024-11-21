@@ -1,7 +1,7 @@
 import random
 import machine
 import time
-from vivero import vivero
+from vivero import Vivero
 #Configuracion de los pines
 # Pines para los segmentos del display de 7 segmentos
 pin_A = machine.Pin(2, machine.Pin.OUT)

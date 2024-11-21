@@ -78,7 +78,7 @@ class Vivero:
     def registrar_mediciones(self, aspersor, alcance, hora):
         if 0b00000001 <= aspersor <= 0b00001000:  # Verifica que el aspersor sea válido
             self.cant_mediciones[aspersor - 1] += 1  # Incrementa el contador del aspersor
-            self.cant_medicioneshora[hora] += 1  # Incrementa el contador para la hora
+            self.cant_medicioneshora[hora - 1] += 1  # Incrementa el contador para la hora
 
             if (aspersor & 0b00000001) == 0:  # Si el aspersor es par
                 if 0b00000100 <= alcance <= 0b00000111:  # Alcance válido para pares
@@ -108,6 +108,4 @@ class Vivero:
         print("\nAspersores defectuosos:")
         for i in range(8):
             if self.cant_mediciones[i] == 0:  # Sin mediciones
-                print(f"Aspersor {i + 1}: Sin mediciones.")
-            else:
-                print(f"Aspersor {i + 1}: Operativo.")
+                print(f"Aspersor {i + 1}: Sin mediciones o con medciones igual a cero")

@@ -49,15 +49,11 @@ class Vivero:
 
     def set_cant_mediciones(self, indice, valor):
         # Modifica el número de mediciones de un aspersor específico
-        # `indice` debe estar entre 0 y 7 (aspirando a 8 aspersores)
-        if 0 <= indice < len(self.cant_mediciones):
-            self.cant_mediciones[indice] = valor
+        self.cant_mediciones[indice] = valor
 
     def set_cant_medicioneshora(self, indice, valor):
         # Modifica el número de mediciones de una hora específica
-        # `indice` debe estar entre 0 y 23 (24 horas)
-        if 0 <= indice < len(self.cant_medicioneshora):
-            self.cant_medicioneshora[indice] = valor
+        self.cant_medicioneshora[indice] = valor
 
     def set_acum_promediopar(self, valor):
         # Asigna un nuevo valor al acumulador de promedios para aspersores pares

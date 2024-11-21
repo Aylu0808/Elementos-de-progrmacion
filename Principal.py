@@ -2,6 +2,7 @@ import random
 import machine
 import time
 from vivero import Vivero
+
 #Configuracion de los pines
 # Pines para los segmentos del display de 7 segmentos
 pin_A = machine.Pin(2, machine.Pin.OUT)
@@ -103,7 +104,7 @@ def main():
                 SieteSegmentos(1,1,1,1,1,1,1)
             # Restablecer el display a un estado inactivo
             SieteSegmentos(1, 1, 1, 1, 1, 1, 1)
-            time.sleep(1)
+            #time.sleep(1)
             apagar_led()
         # Si el aspersor es igual a 0, finalizamos la simulación
             if aspersor == 0:

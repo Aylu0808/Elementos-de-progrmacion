@@ -20,6 +20,7 @@ led_5 = machine.Pin(26, machine.Pin.OUT)
 led_6 = machine.Pin(25, machine.Pin.OUT)
 led_7 = machine.Pin(33, machine.Pin.OUT)
 led_8 = machine.Pin(32, machine.Pin.OUT)
+led_9 = machine.Pin(17, machine.Pin.OUT)
 #Funcion para apagar los leds
 def apagar_led():
     """Apaga todos los LEDs, simulando que ningún aspersor está activo."""
@@ -31,6 +32,7 @@ def apagar_led():
     led_6.value(0)
     led_7.value(0)
     led_8.value(0)
+    led_9.value(0)
 #Control del display de 7 Segmentos
 def SieteSegmentos(A, B, C, D, E, F, G):
     pin_A.value(A)
@@ -109,6 +111,7 @@ def main():
                 led_5.value(1)
                 led_6.value(1)
                 led_7.value(1)
+                led_8.value(1)
                 time.sleep(3)
                 SieteSegmentos(1,1,1,1,1,1,1)
             # Restablecer el display a un estado inactivo
@@ -118,6 +121,7 @@ def main():
         # Si el aspersor es igual a 0, finalizamos la simulación
         if aspersor == 0:
             print("Finalizó el proceso debido a aspersor igual a 0.")
+            led_9.value(1)
             x = 1  # Salir del bucle
         else: # Si los bits de sincronismo son iguales, generar nuevos valores
             print("Sincronismo S1 igual a S2, intentando con nuevos valores.")

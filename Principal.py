@@ -100,6 +100,17 @@ def main():
                 led_5.value(1)
                 led_6.value(1)
                 led_7.value(1)
+            elif aspersor == 0b00001000:
+                SieteSegmentos(0,0,0,0,0,0,0)
+                led_1.value(1)
+                led_2.value(1)
+                led_3.value(1)
+                led_4.value(1)
+                led_5.value(1)
+                led_6.value(1)
+                led_7.value(1)
+                time.sleep(3)
+                SieteSegmentos(1,1,1,1,1,1,1)
             # Restablecer el display a un estado inactivo
             SieteSegmentos(1, 1, 1, 1, 1, 1, 1)
             time.sleep(1)

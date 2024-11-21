@@ -1,6 +1,6 @@
 import random
+import machine
 import time
-import vivero from vivero
 #Configuracion de los pines
 # Pines para los segmentos del display de 7 segmentos
 pin_A = machine.Pin(2, machine.Pin.OUT)
@@ -63,66 +63,52 @@ def main():
             if aspersor == 0b00000001:  # Aspersor 1
                 SieteSegmentos(1, 0, 0, 1, 1, 1, 1)
                 led_1.value(1)
+                time.sleep(2)
+                SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000010:  # Aspersor 2
                 SieteSegmentos(0, 0, 1, 0, 0, 1, 0)
-                led_1.value(1)
                 led_2.value(1)
+                time.sleep(2)
+                SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000011:  # Aspersor 3
                 SieteSegmentos(0, 0, 0, 0, 1, 1, 0)
-                led_1.value(1)
-                led_2.value(1)
                 led_3.value(1)
+                time.sleep(2)
+                SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000100:  # Aspersor 4
                 SieteSegmentos(1, 0, 0, 1, 1, 0, 0)
-                led_1.value(1)
-                led_2.value(1)
-                led_3.value(1)
                 led_4.value(1)
+                time.sleep(2)
+                SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000101:  # Aspersor 5
                 SieteSegmentos(0, 1, 0, 0, 1, 0, 0)
-                led_1.value(1)
-                led_2.value(1)
-                led_3.value(1)
-                led_4.value(1)
                 led_5.value(1)
+                time.sleep(2)
+                SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000110:  # Aspersor 6
                 SieteSegmentos(0, 1, 0, 0, 0, 0, 0)
-                led_1.value(1)
-                led_2.value(1)
-                led_3.value(1)
-                led_4.value(1)
-                led_5.value(1)
                 led_6.value(1)
+                time.sleep(2)
+                SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000111:  # Aspersor 7
                 SieteSegmentos(0, 0, 0, 1, 1, 1, 1)
-                led_1.value(1)
-                led_2.value(1)
-                led_3.value(1)
-                led_4.value(1)
-                led_5.value(1)
-                led_6.value(1)
                 led_7.value(1)
+                time.sleep(2)
+                SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00001000:
                 SieteSegmentos(0,0,0,0,0,0,0)
-                led_1.value(1)
-                led_2.value(1)
-                led_3.value(1)
-                led_4.value(1)
-                led_5.value(1)
-                led_6.value(1)
-                led_7.value(1)
                 led_8.value(1)
-                time.sleep(3)
+                time.sleep(2)
                 SieteSegmentos(1,1,1,1,1,1,1)
             # Restablecer el display a un estado inactivo
             SieteSegmentos(1, 1, 1, 1, 1, 1, 1)
             time.sleep(1)
             apagar_led()
         # Si el aspersor es igual a 0, finalizamos la simulación
-        if aspersor == 0:
-            print("Finalizó el proceso debido a aspersor igual a 0.")
-            led_9.value(1)
-            x = 1  # Salir del bucle
+            if aspersor == 0:
+                print("Finalizó el proceso debido a aspersor igual a 0.")
+                led_9.value(1)
+                x = 1  # Salir del bucle
         else: # Si los bits de sincronismo son iguales, generar nuevos valores
             print("Sincronismo S1 igual a S2, intentando con nuevos valores.")
         # Actualizar los valores aleatorios para la siguiente iteración
@@ -132,4 +118,4 @@ def main():
     # Reportar los resultados después de salir del bucle
     vivero.reportar_resultados()
 if __name__ == "__main__":
-    main()
+  main()

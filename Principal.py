@@ -116,7 +116,6 @@ def main():
     print(f"Alcance promedio de los impares:",promedio_impar)
     
     # Reporte de aspersores defectuosos
-    print("\nAspersores defectuosos:")
     for i in range(8):
         if vivero.cant_mediciones[i] == 0:  # Sin mediciones
             print(f"Aspersor {i + 1}: Sin mediciones o con medciones igual a cero")

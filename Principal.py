@@ -88,16 +88,15 @@ def main():
                 
             # Restablecer el display a un estado inactivo
             pin.SieteSegmentos(1,1,1,1,1,1,1)
-            time.sleep(4)
+            #time.sleep(1)
             pin.apagar_led()
             
         # Si el aspersor es igual a 0, finalizamos la simulación
-            if aspersor == 0:
+            if aspersor == 0b00000000:
                 print("Finalizó el proceso debido a aspersor igual a 0.")
                 pin.led_9.value(1)
                 x = 1  # Salir del bucle
         else: # Si los bits de sincronismo son iguales, generar nuevos valores
-            time.sleep(2)
             print("Sincronismo S1 igual a S2, intentando con nuevos valores.")
             
         # Actualizar los valores aleatorios para la siguiente iteración

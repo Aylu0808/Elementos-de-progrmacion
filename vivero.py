@@ -70,3 +70,4 @@ class Vivero:
     def set_cont_impares(self, valor):
         # Modifica el contador de mediciones válidas de aspersores impares
         self.cont_impares = valor  
+

@@ -2,122 +2,126 @@ import random
 import machine
 import time
 from vivero import Vivero
-
-#Configuracion de los pines
-# Pines para los segmentos del display de 7 segmentos
-pin_A = machine.Pin(2, machine.Pin.OUT)
-pin_B = machine.Pin(4, machine.Pin.OUT)
-pin_C = machine.Pin(5, machine.Pin.OUT)
-pin_D = machine.Pin(18, machine.Pin.OUT)
-pin_E = machine.Pin(19, machine.Pin.OUT)
-pin_F = machine.Pin(21, machine.Pin.OUT)
-pin_G = machine.Pin(22, machine.Pin.OUT)
-
-# Pines para los LEDs que representan los aspersores
-led_1 = machine.Pin(13, machine.Pin.OUT)
-led_2 = machine.Pin(12, machine.Pin.OUT)
-led_3 = machine.Pin(14, machine.Pin.OUT)
-led_4 = machine.Pin(27, machine.Pin.OUT)
-led_5 = machine.Pin(26, machine.Pin.OUT)
-led_6 = machine.Pin(25, machine.Pin.OUT)
-led_7 = machine.Pin(33, machine.Pin.OUT)
-led_8 = machine.Pin(32, machine.Pin.OUT)
-led_9 = machine.Pin(17, machine.Pin.OUT)
-#Funcion para apagar los leds
-def apagar_led():
-    """Apaga todos los LEDs, simulando que ningún aspersor está activo."""
-    led_1.value(0)
-    led_2.value(0)
-    led_3.value(0)
-    led_4.value(0)
-    led_5.value(0)
-    led_6.value(0)
-    led_7.value(0)
-    led_8.value(0)
-    led_9.value(0)
-#Control del display de 7 Segmentos
-def SieteSegmentos(A, B, C, D, E, F, G):
-    pin_A.value(A)
-    pin_B.value(B)
-    pin_C.value(C)
-    pin_D.value(D)
-    pin_E.value(E)
-    pin_F.value(F)
-    pin_G.value(G)
-#Funcion Principal
+import pines as pin
+                
 def main():
+    
     vivero = Vivero()# Crear una instancia de la clase Vivero
-    print("Simulación del sistema de riego iniciada...\n") 
+    
+    print("Simulación del sistema de riego iniciada...\n")
+    
     hora_actual = time.localtime()# Obtener la hora actual del sistema
+    
     alcance = random.randint(0, 255)# Generar un valor aleatorio para el alcance
+    
     # Obtener los bits de sincronismo S1 y S2 del valor `alcance`
     s1 = (alcance >> 1) & 0b1  # Bit 1
     s2 = alcance & 0b1         # Bit 0
-    # Variable para controlar el bucle principal
-    x = 0
+    
+    x = 0 # Variable para controlar el bucle principal
     while x == 0:
-        # Si los bits de sincronismo son diferentes
-        if s1 != s2:
+        
+        if s1 != s2: # Si los bits de sincronismo son diferentes
             aspersor = random.randint(0, 255)  # Generar un valor aleatorio para el aspersor
+            
             # Registrar medición en el vivero
-            vivero.registrar_mediciones(aspersor, alcance, hora_actual[3])
+            if 0b00000001 <= aspersor <= 0b00001000:  # Verifica que el aspersor sea válido
+                vivero.cant_mediciones[aspersor - 1] += 1  # Incrementa el contador del aspersor
+                vivero.cant_medicioneshora[hora_actual[3] - 1] += 1  # Incrementa el contador para la hora
+
+                if (aspersor & 0b00000001) == 0:  # Si el aspersor es par
+                    if 0b00000100 <= alcance <= 0b00000111:  # Alcance válido para pares
+                        vivero.acum_promediopar += alcance  # Suma al acumulador de pares
+                        vivero.cont_pares += 1  # Incrementa el contador de pares válidos
+                    else:
+                        vivero.cont_alarmaspar += 1  # Incrementa el contador de alarmas de pares
+                        print(f"ALARMA: Aspersor",aspersor,"fuera de rango (alcance:", alcance, ") a las",hora_actual[3])
+                else:  # Si el aspersor es impar
+                    if 0b00000110 <= alcance <= 0b00001111:  # Alcance válido para impares
+                        vivero.acum_promedioimpar += alcance  # Suma al acumulador de impares
+                        vivero.cont_impares += 1  # Incrementa el contador de impares válidos
+                    else:
+                        vivero.cont_alarmasimpar += 1  # Incrementa el contador de alarmas de impares
+                        print(f"ALARMA: Aspersor",aspersor,"fuera de rango (alcance:", alcance, ") a las",hora_actual[3])
+                    
             # Determinar cuál aspersor está activo y mostrarlo en el display de 7 segmentos
             if aspersor == 0b00000001:  # Aspersor 1
-                SieteSegmentos(1, 0, 0, 1, 1, 1, 1)
-                led_1.value(1)
+                pin.SieteSegmentos(1, 0, 0, 1, 1, 1, 1)
+                pin.led_1.value(1)
                 time.sleep(2)
-                SieteSegmentos(1,1,1,1,1,1,1)
+                pin.SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000010:  # Aspersor 2
-                SieteSegmentos(0, 0, 1, 0, 0, 1, 0)
-                led_2.value(1)
+                pin.SieteSegmentos(0, 0, 1, 0, 0, 1, 0)
+                pin.led_2.value(1)
                 time.sleep(2)
-                SieteSegmentos(1,1,1,1,1,1,1)
+                pin.SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000011:  # Aspersor 3
-                SieteSegmentos(0, 0, 0, 0, 1, 1, 0)
-                led_3.value(1)
+                pin.SieteSegmentos(0, 0, 0, 0, 1, 1, 0)
+                pin.led_3.value(1)
                 time.sleep(2)
-                SieteSegmentos(1,1,1,1,1,1,1)
+                pin.SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000100:  # Aspersor 4
-                SieteSegmentos(1, 0, 0, 1, 1, 0, 0)
-                led_4.value(1)
+                pin.SieteSegmentos(1, 0, 0, 1, 1, 0, 0)
+                pin.led_4.value(1)
                 time.sleep(2)
-                SieteSegmentos(1,1,1,1,1,1,1)
+                pin.SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000101:  # Aspersor 5
-                SieteSegmentos(0, 1, 0, 0, 1, 0, 0)
-                led_5.value(1)
+                pin.SieteSegmentos(0, 1, 0, 0, 1, 0, 0)
+                pin.led_5.value(1)
                 time.sleep(2)
-                SieteSegmentos(1,1,1,1,1,1,1)
+                pin.SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000110:  # Aspersor 6
-                SieteSegmentos(0, 1, 0, 0, 0, 0, 0)
-                led_6.value(1)
+                pin.SieteSegmentos(0, 1, 0, 0, 0, 0, 0)
+                pin.led_6.value(1)
                 time.sleep(2)
-                SieteSegmentos(1,1,1,1,1,1,1)
+                pin.SieteSegmentos(1,1,1,1,1,1,1)
             elif aspersor == 0b00000111:  # Aspersor 7
-                SieteSegmentos(0, 0, 0, 1, 1, 1, 1)
-                led_7.value(1)
+                pin.SieteSegmentos(0, 0, 0, 1, 1, 1, 1)
+                pin.led_7.value(1)
                 time.sleep(2)
-                SieteSegmentos(1,1,1,1,1,1,1)
-            elif aspersor == 0b00001000:
-                SieteSegmentos(0,0,0,0,0,0,0)
-                led_8.value(1)
+                pin.SieteSegmentos(1,1,1,1,1,1,1)
+            elif aspersor == 0b00001000: # Aspersor 8
+                pin.SieteSegmentos(0,0,0,0,0,0,0)
+                pin.led_8.value(1)
                 time.sleep(2)
-                SieteSegmentos(1,1,1,1,1,1,1)
+                pin.SieteSegmentos(1,1,1,1,1,1,1)
+                
             # Restablecer el display a un estado inactivo
-            SieteSegmentos(1, 1, 1, 1, 1, 1, 1)
-            #time.sleep(1)
-            apagar_led()
+            pin.SieteSegmentos(1,1,1,1,1,1,1)
+            time.sleep(4)
+            pin.apagar_led()
+            
         # Si el aspersor es igual a 0, finalizamos la simulación
             if aspersor == 0:
                 print("Finalizó el proceso debido a aspersor igual a 0.")
-                led_9.value(1)
+                pin.led_9.value(1)
                 x = 1  # Salir del bucle
         else: # Si los bits de sincronismo son iguales, generar nuevos valores
+            time.sleep(2)
             print("Sincronismo S1 igual a S2, intentando con nuevos valores.")
+            
         # Actualizar los valores aleatorios para la siguiente iteración
         alcance = random.randint(0, 255)
         s1 = (alcance >> 1) & 0b1
         s2 = alcance & 0b1
-    # Reportar los resultados después de salir del bucle
-    vivero.reportar_resultados()
+        
+    promedio_par = vivero.acum_promediopar / (vivero.cont_pares or 1)
+    promedio_impar = vivero.acum_promedioimpar / (vivero.cont_impares or 1)
+        
+    print("Resultados:")
+    print(f"Alarmas en aspersores pares:",vivero.cont_alarmaspar)
+    print(f"Alarmas en aspersores impares:",vivero.cont_alarmasimpar)
+    print(f"Mediciones por aspersor:",vivero.cant_mediciones)
+    print(f"Mediciones por hora:",vivero.cant_medicioneshora)
+    print(f"Alcance promedio de los pares:",promedio_par)
+    print(f"Alcance promedio de los impares:",promedio_impar)
+    
+    # Reporte de aspersores defectuosos
+    print("\nAspersores defectuosos:")
+    for i in range(8):
+        if vivero.cant_mediciones[i] == 0:  # Sin mediciones
+            print(f"Aspersor {i + 1}: Sin mediciones o con medciones igual a cero")
+
+    
 if __name__ == "__main__":
-  main()
+    main()

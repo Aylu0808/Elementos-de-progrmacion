@@ -3,7 +3,57 @@ import machine
 import time
 from vivero import Vivero
 import pines as pin
-                
+
+def leds(aspersor):
+    if aspersor == 0b00000001:  # Aspersor 1
+        pin.SieteSegmentos(1, 0, 0, 1, 1, 1, 1)
+        pin.led_1.value(1)
+        time.sleep(2)
+        pin.SieteSegmentos(1,1,1,1,1,1,1)
+    elif aspersor == 0b00000010:  # Aspersor 2
+        pin.SieteSegmentos(0, 0, 1, 0, 0, 1, 0)
+        pin.led_2.value(1)
+        time.sleep(2)
+        pin.SieteSegmentos(1,1,1,1,1,1,1)
+    elif aspersor == 0b00000011:  # Aspersor 3
+        pin.SieteSegmentos(0, 0, 0, 0, 1, 1, 0)
+        pin.led_3.value(1)
+        time.sleep(2)
+        pin.SieteSegmentos(1,1,1,1,1,1,1)
+    elif aspersor == 0b00000100:  # Aspersor 4
+        pin.SieteSegmentos(1, 0, 0, 1, 1, 0, 0)
+        pin.led_4.value(1)
+        time.sleep(2)
+        pin.SieteSegmentos(1,1,1,1,1,1,1)
+    elif aspersor == 0b00000101:  # Aspersor 5
+        pin.SieteSegmentos(0, 1, 0, 0, 1, 0, 0)
+        pin.led_5.value(1)
+        time.sleep(2)
+        pin.SieteSegmentos(1,1,1,1,1,1,1)
+    elif aspersor == 0b00000110:  # Aspersor 6
+        pin.SieteSegmentos(0, 1, 0, 0, 0, 0, 0)
+        pin.led_6.value(1)
+        time.sleep(2)
+        pin.SieteSegmentos(1,1,1,1,1,1,1)
+    elif aspersor == 0b00000111:  # Aspersor 7
+        pin.SieteSegmentos(0, 0, 0, 1, 1, 1, 1)
+        pin.led_7.value(1)
+        time.sleep(2)
+        pin.SieteSegmentos(1,1,1,1,1,1,1)
+    elif aspersor == 0b00001000: # Aspersor 8
+        pin.SieteSegmentos(0,0,0,0,0,0,0)
+        pin.led_8.value(1)
+        time.sleep(2)
+        pin.SieteSegmentos(1,1,1,1,1,1,1)
+
+def apagado():   
+    # Restablecer el display a un estado inactivo
+    pin.SieteSegmentos(1,1,1,1,1,1,1)
+    #time.sleep(1)
+    pin.apagar_led()
+
+def mostrar_resultados():
+
 def main():
     
     vivero = Vivero()# Crear una instancia de la clase Vivero
@@ -23,8 +73,6 @@ def main():
         
         if s1 != s2: # Si los bits de sincronismo son diferentes
             aspersor = random.randint(0, 255)  # Generar un valor aleatorio para el aspersor
-            
-            # Registrar medición en el vivero
             if 0b00000001 <= aspersor <= 0b00001000:  # Verifica que el aspersor sea válido
                 vivero.cant_mediciones[aspersor - 1] += 1  # Incrementa el contador del aspersor
                 vivero.cant_medicioneshora[hora_actual[3] - 1] += 1  # Incrementa el contador para la hora
@@ -43,54 +91,8 @@ def main():
                     else:
                         vivero.cont_alarmasimpar += 1  # Incrementa el contador de alarmas de impares
                         print(f"ALARMA: Aspersor",aspersor,"fuera de rango (alcance:", alcance, ") a las",hora_actual[3])
-                    
-            # Determinar cuál aspersor está activo y mostrarlo en el display de 7 segmentos
-            if aspersor == 0b00000001:  # Aspersor 1
-                pin.SieteSegmentos(1, 0, 0, 1, 1, 1, 1)
-                pin.led_1.value(1)
-                time.sleep(2)
-                pin.SieteSegmentos(1,1,1,1,1,1,1)
-            elif aspersor == 0b00000010:  # Aspersor 2
-                pin.SieteSegmentos(0, 0, 1, 0, 0, 1, 0)
-                pin.led_2.value(1)
-                time.sleep(2)
-                pin.SieteSegmentos(1,1,1,1,1,1,1)
-            elif aspersor == 0b00000011:  # Aspersor 3
-                pin.SieteSegmentos(0, 0, 0, 0, 1, 1, 0)
-                pin.led_3.value(1)
-                time.sleep(2)
-                pin.SieteSegmentos(1,1,1,1,1,1,1)
-            elif aspersor == 0b00000100:  # Aspersor 4
-                pin.SieteSegmentos(1, 0, 0, 1, 1, 0, 0)
-                pin.led_4.value(1)
-                time.sleep(2)
-                pin.SieteSegmentos(1,1,1,1,1,1,1)
-            elif aspersor == 0b00000101:  # Aspersor 5
-                pin.SieteSegmentos(0, 1, 0, 0, 1, 0, 0)
-                pin.led_5.value(1)
-                time.sleep(2)
-                pin.SieteSegmentos(1,1,1,1,1,1,1)
-            elif aspersor == 0b00000110:  # Aspersor 6
-                pin.SieteSegmentos(0, 1, 0, 0, 0, 0, 0)
-                pin.led_6.value(1)
-                time.sleep(2)
-                pin.SieteSegmentos(1,1,1,1,1,1,1)
-            elif aspersor == 0b00000111:  # Aspersor 7
-                pin.SieteSegmentos(0, 0, 0, 1, 1, 1, 1)
-                pin.led_7.value(1)
-                time.sleep(2)
-                pin.SieteSegmentos(1,1,1,1,1,1,1)
-            elif aspersor == 0b00001000: # Aspersor 8
-                pin.SieteSegmentos(0,0,0,0,0,0,0)
-                pin.led_8.value(1)
-                time.sleep(2)
-                pin.SieteSegmentos(1,1,1,1,1,1,1)
-                
-            # Restablecer el display a un estado inactivo
-            pin.SieteSegmentos(1,1,1,1,1,1,1)
-            #time.sleep(1)
-            pin.apagar_led()
-            
+            leds(aspersor)
+            apagado()
         # Si el aspersor es igual a 0, finalizamos la simulación
             if aspersor == 0b00000000:
                 print("Finalizó el proceso debido a aspersor igual a 0.")

@@ -52,8 +52,6 @@ def apagado():
     #time.sleep(1)
     pin.apagar_led()
 
-def mostrar_resultados():
-
 def main():
     
     vivero = Vivero()# Crear una instancia de la clase Vivero
